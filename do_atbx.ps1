@@ -148,10 +148,12 @@ function Pack-Atbx {
     process {
 
         $date_format = "yyyy-MM-dd" # ISO8601
-        ${sep} = "_"
+        $sep = "_"
         
+        # LeafBase itself will remove version periods from Name if Name doesn't
+        # have an actual extension.
         $parent = Split-Path $Name -Parent
-        $Name = Split-Path $Name -LeafBase
+        $Name = (Split-Path $Name -Leaf).Replace(".atbx", "")
 
         if ($parent -eq "") {
             $parent = Get-Location
