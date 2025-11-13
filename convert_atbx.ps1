@@ -136,13 +136,19 @@ function Pack-Atbx {
         Examples:
           -Action pack -Name temp -Master Temp_Master        ->  temp.atbx created from contents of .\Temp_Master
           -Action pack -Name good -Master T:\Why\TBContents  ->  good.atbx created from contents of T:\Why\TBContents
+    
+    .PARAMETER CompressionLevel
+        Sets compression level for zipping code to atbx. This is a parameter 
+        from commandlet "Compress-Archive" and is passed through to it.
+        Default is "Optimal" like Compress-Archive.
     #>
     
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)][string]$Name,
         [switch]$Date,
-        [string]$Master = $master_default
+        [string]$Master = $master_default,
+        [ValidateSet("Optimal", "NoCompression", "Fastest")][string]$CompressionLevel = "Optimal"
     )
 
     process {
@@ -176,7 +182,7 @@ function Pack-Atbx {
         }
 
         $out_atbx = Join-Path $parent "${Name}${date_str}.atbx"
-        Compress-Archive -Force -CompressionLevel NoCompression -DestinationPath $out_atbx -Path $Master\*
+        Compress-Archive -Force -CompressionLevel $CompressionLevel -DestinationPath $out_atbx -Path $Master\*
         # Push-Location $AtbxMaster
         # & $7zip a -tzip -mx0 ${out_atbx} *
         # Pop-Location
