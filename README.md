@@ -31,5 +31,5 @@ This "Name" also controls the name of the folder within ATBX_MASTER. Changing th
 1. clone the repo wherever you like.
 2. source the cmdlet in your pwsh profile.
     1. edit your profile. ex: `code $PROFILE`.
-    2. add line `Import-Module C:\...\convert_atbx_cmdlet\AtbxCommands`.
+    2. add line `Import-Module C:\...\convert_atbx_cmdlet\AtbxCommands -DisableNameChecking`. Note `-DisableNameChecking` turns off a stupid warning about "unapproved verbs".
     3. restart any shells or re-source your profile (ex: `. $PROFILE`).
