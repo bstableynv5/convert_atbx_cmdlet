@@ -1,8 +1,8 @@
 function Diff-Atbx {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true)][string]$A,
-        [Parameter(Mandatory = $true)][string]$B,
+        [Parameter(Mandatory = $true)][Alias("A")][string]$Old,
+        [Parameter(Mandatory = $true)][Alias("B")][string]$New,
         [string]$TempDir = ".diffatbx_temp"
     )
         
@@ -13,13 +13,16 @@ function Diff-Atbx {
     process {
 
         try {
-            $ADir = (Join-Path $TempDir "A")
-            Unpack-Atbx -Name $A -Master $ADir
+            # unpack-atbx creates non-existent dirs
+            
+            $OldDir = (Join-Path $TempDir "OLD")
+            Unpack-Atbx -Name $Old -Master $OldDir
 
-            $BDir = (Join-Path $TempDir "B")
-            Unpack-Atbx -Name $B -Master $BDir
+            $NewDir = (Join-Path $TempDir "NEW")
+            Unpack-Atbx -Name $New -Master $NewDir
 
-            git diff --no-index $ADir $BDir
+            # no-pager dumps entire diff to screen non-interactively
+            git --no-pager diff --no-index $OldDir $NewDir
         }
         finally {
             # ctrl-c while in git diff pager kills script.
