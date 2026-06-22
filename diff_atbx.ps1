@@ -1,4 +1,33 @@
 function Diff-Atbx {
+    <#
+    .SYNOPSIS
+        Uses git diff to show changes between two ArcGIS Pro Toolboxes (ATBX files).
+    .DESCRIPTION
+        Relies on Unpack-Atbx which is also provided by this module. Also relies
+        on git diff. Presents diff in non-interactive (no-pager) mode.
+    .PARAMETER Old
+        The "A" or "Changed From" toolbox.
+        .PARAMETER New
+        The "B" or "Changed To" toolbox.
+    .PARAMETER Output
+        A file to write the diff into.
+    .PARAMETER TempDir
+        Temporary directory where Old and New atbxs will be unzipped for diffing.
+    .EXAMPLE
+        Diffs v1 and v1.2 versions of a toolbox.
+
+            Diff-Atbx Toolbox_v1.0.atbx Toolbox_v1.2.atbx
+        
+        Same but uses parameter names.
+
+            Diff-Atbx -Old Toolbox_v1.0.atbx -New Toolbox_v1.2.atbx
+
+        Save diff to a file.
+
+            Diff-Atbx -Old Toolbox_v1.0.atbx -New Toolbox_v1.2.atbx -Output changes.diff
+    #>
+    
+    
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)][Alias("A")][string]$Old,
