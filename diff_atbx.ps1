@@ -7,7 +7,6 @@ function Diff-Atbx {
     )
         
     begin {
-        . $PSScriptRoot\convert_atbx.ps1
     }
     
     process {
