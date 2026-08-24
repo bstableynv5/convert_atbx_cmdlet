@@ -229,6 +229,8 @@ function Unpack-Atbx {
     )
 
     process {
+        # keep folder, delete contents
+        Remove-Item -Force -Recurse (Join-Path $Master "\*")
         Expand-Archive -Force -Path $Name -DestinationPath $Master
         # & $7zip x $Name "-o${AtbxMaster}" -y
     }
